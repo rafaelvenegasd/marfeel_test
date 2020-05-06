@@ -6,9 +6,15 @@ export function getUsers(username){
         return response.json();
     })
     .then((data) => {
-        console.log(data);
+        if(data.message){
+            console.log("Does not exist");
+        }else{
+            console.log(data);
+        }
     })
     .catch((error) => {
         console.log('There was a problem with the Fetch request:' + error.message);
     });
 } 
+
+// comprobar isvalidCall()
