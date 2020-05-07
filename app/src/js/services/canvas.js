@@ -1,29 +1,28 @@
-import {customizeResponse} from "./helpers.js";
-import { GithubApi } from "./fetch.js";
+import {customizeUsersResponse, customizeCommitsResponse} from "./helpers.js";
+import {GithubApi} from "./fetch.js";
 
 const api = new GithubApi();
-
 export class Canvas{
     drawUserInfo(user){
-        customizeResponse(user);
-        console.log(user);
-        const newUserInfo=
-        `<img src="${user.avatar_url}"><span>${user.login}</span>
-        <h1>${user.name}</h1><span>${user.email}</span><span>${user.bio}</span>`;
-        document.getElementById("userContainer").innerHTML=newUserInfo;
+        customizeUsersResponse(user);
+        const newUserInfo=`<img src="${user.avatar_url}" class="img-user-profile">
+            <div><span>${user.login}</span><h1>${user.name}</h1><span>${user.bio}</span></div>`;
+        document.getElementById("users-content-container").innerHTML=newUserInfo;
     }
-    drawRepositoriesInfo(username, repos){
-        console.log(repos);
-        const newReposTittle=
-        `<h2>Repositories</h2>`;
-        document.getElementById("reposTittle").innerHTML=newReposTittle;
-        repos.forEach(async (repo) => {
-            const commit = await api.getCommits(username, repo.name);
-            console.log(commit.length);    
-            console.log(repo.name);    
-            let newReposInfo =
-            `<li><span>${repo.name}</span><span>${commit.length}</span></li>`;
-            document.getElementById("reposContainer").innerHTML += newReposInfo;
+    drawRepositoriesInfo(username, repositories){
+        
+        const repositoryTittle =
+            `<div><h2>Repositories</h2></div>
+            <div class="repositories-content-container"><div><ul id="repositories-names-list"></ul></div>
+            <div><ul id="repositories-commits-list"></ul></div></div>`;
+        document.getElementById("repositories-container").innerHTML += repositoryTittle;
+        repositories.forEach(async (repository) => {
+            const commit = await api.getCommits(username, repository.name); 
+            customizeCommitsResponse(commit); 
+            let repositoryNames = `<li><span>${repository.name}</span></li>`;
+            let repositoryCommits = `<li><span>${commit.length}</span></li>`;
+            document.getElementById("repositories-names-list").innerHTML += repositoryNames;
+            document.getElementById("repositories-commits-list").innerHTML += repositoryCommits;
         });
     }
 }
