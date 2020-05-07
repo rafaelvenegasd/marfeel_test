@@ -7,9 +7,11 @@ export const customizeUsersResponse = userInfo =>{
 }
 
 export const customizeContentResponse = content =>{
-   for (let param in content){
-        if(!content[param]){
-            return 0;
-        }
+    if(content.message){
+        return content.length = 0;
     }
+}
+
+export const clear = element =>{
+    return element.innerHTML = ""
 }

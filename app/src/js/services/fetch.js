@@ -1,3 +1,5 @@
+const fetch = require("node-fetch");
+
 export class GithubApi{
     async checkUserExist(keyword){
         const url = `https://api.github.com/users/${keyword}`

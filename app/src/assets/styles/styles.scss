@@ -14,10 +14,24 @@
     height: 10px;
 }
 
-.repos-content-container{
+.repos-commits-and-forks-container{
     display: flex;
+    justify-content: space-between;
 }
 
 ul{
     list-style: none;
+    padding-left: 5px !important;
+}
+
+.separator{
+    background-color: lightgray;
+}
+
+.main-separator{
+    background-color: black;
+}
+
+.subtitle-size{
+    font-size: x-large;
 }
