@@ -13,6 +13,13 @@ button.addEventListener("click", async () =>{
         const user = await api.checkUserExist(keyword);
         const username = user.login;
         const repos = await api.getRepositories(username);
+
+        repos.forEach(async repo => {
+            const commit = await api.getCommits(username, repo.name);
+            console.log(commit.length);
+        });
+
+
         item.drawDivs();
         item.drawUserInfo(user);
         item.drawReposInfo(repos);
