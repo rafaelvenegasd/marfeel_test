@@ -1,20 +1,10 @@
-
-export function getUsers(username){
-    const url = 'https://api.github.com/users/'+username
-    fetch(url)
-    .then((response) => {
-        return response.json();
-    })
-    .then((data) => {
-        if(data.message){
-            console.log("Does not exist");
-        }else{
-            console.log(data);
-        }
-    })
-    .catch((error) => {
-        console.log('There was a problem with the Fetch request:' + error.message);
-    });
-} 
-
-// comprobar isvalidCall()
+export class GithubApi{
+    async checkUserExist(keyword){
+        const url = 'https://api.github.com/users/'+keyword
+        return fetch(url).then(response => response.json())
+    }
+    async getRepositories(username){
+        const url = 'https://api.github.com/users/'+username+ '/repos'
+        return fetch(url).then(response => response.json())
+    }
+}
