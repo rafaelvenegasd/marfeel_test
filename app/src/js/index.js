@@ -13,10 +13,9 @@ button.addEventListener("click", async () =>{
         const user = await api.checkUserExist(keyword);
         const username = user.login;
         const repos = await api.getRepositories(username);
-        const userData = item.drawUserInfo(user);
-        const reposData = item.drawReposInfo(repos);
-        console.log(user);
-        console.log(repos);
+        item.drawDivs();
+        item.drawUserInfo(user);
+        item.drawReposInfo(repos);
     } catch (error) {
         console.log(error);
     }
