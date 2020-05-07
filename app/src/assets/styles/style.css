@@ -9,7 +9,12 @@
     margin-bottom: 20px;
 }
 
-.repositories-content-container{
+.icon{
+    width: 10px;
+    height: 10px;
+}
+
+.repos-content-container{
     display: flex;
 }
 

@@ -12,8 +12,8 @@ button.addEventListener("click", async () =>{
         canvas.drawUserInfo(user);
         
         const username = user.login;
-        const repositories = await api.getRepositories(username);
-        canvas.drawRepositoriesInfo(username, repositories);
+        const repos = await api.getRepos(username);
+        canvas.drawReposInfo(username, repos);
     } catch (error) {
         console.log(error);
     }

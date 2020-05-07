@@ -1,4 +1,4 @@
-import {customizeUsersResponse, customizeCommitsResponse} from "./helpers.js";
+import {customizeUsersResponse, customizeContentResponse} from "./helpers.js";
 import {GithubApi} from "./fetch.js";
 
 const api = new GithubApi();
@@ -9,20 +9,23 @@ export class Canvas{
             <div><span>${user.login}</span><h1>${user.name}</h1><span>${user.bio}</span></div>`;
         document.getElementById("users-content-container").innerHTML=newUserInfo;
     }
-    drawRepositoriesInfo(username, repositories){
+    drawReposInfo(username, repos){
         
-        const repositoryTittle =
+        const reposTittle =
             `<div><h2>Repositories</h2></div>
-            <div class="repositories-content-container"><div><ul id="repositories-names-list"></ul></div>
-            <div><ul id="repositories-commits-list"></ul></div></div>`;
-        document.getElementById("repositories-container").innerHTML += repositoryTittle;
-        repositories.forEach(async (repository) => {
-            const commit = await api.getCommits(username, repository.name); 
-            customizeCommitsResponse(commit); 
-            let repositoryNames = `<li><span>${repository.name}</span></li>`;
-            let repositoryCommits = `<li><span>${commit.length}</span></li>`;
-            document.getElementById("repositories-names-list").innerHTML += repositoryNames;
-            document.getElementById("repositories-commits-list").innerHTML += repositoryCommits;
+            <div class="repos-content-container"><div><ul id="repos-names-list"></ul></div>
+            <div><ul id="repos-commits-list"></ul></div></div>`;
+        document.getElementById("repos-container").innerHTML += reposTittle;
+        repos.forEach(async (repo) => {
+            const commit = await api.getCommits(username, repo.name); 
+            const fork = await api.getForks(username, repo.name); 
+            customizeContentResponse(commit); 
+            customizeContentResponse(fork); 
+            let repoNames = `<li><span>${repo.name}</span></li>`;
+            let repoCommits = `<figure><img src="../assets/images/star.svg" class="icon"><li><span>${commit.length}</span></figure>
+            <figure><img src="../assets/images/fork.svg" class="icon"><li><span>${fork.length}</span></figure></li>`;
+            document.getElementById("repos-names-list").innerHTML += repoNames;
+            document.getElementById("repos-commits-list").innerHTML += repoCommits;
         });
     }
 }
